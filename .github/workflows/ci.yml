@@ -10,6 +10,10 @@ concurrency:
   group: ci-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
+
+env:
+  min-node: 22
+
 jobs:
   test:
     name: Tests
@@ -23,7 +27,7 @@ jobs:
           run_install: false
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: ${{ env.min-node }}
           cache: 'pnpm'
       - run: pnpm install
       - run: pnpm lint
@@ -41,7 +45,7 @@ jobs:
           run_install: false
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: ${{ env.min-node }}
           cache: 'pnpm'
       - run: pnpm install
       - run: pnpm test:node
@@ -58,7 +62,7 @@ jobs:
           run_install: false
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: ${{ env.min-node }}
           cache: 'pnpm'
       - run: pnpm install
       - run: pnpm test:ember
@@ -88,7 +92,7 @@ jobs:
           run_install: false
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: ${{ env.min-node }}
           cache: 'pnpm'
       - run: pnpm install
       - run: node_modules/.bin/ember try:one ${{ matrix.ember-try-scenario }} --skip-cleanup
